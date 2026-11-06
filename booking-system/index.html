@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI Automation Booking System — Digital Products</title>
+<style>
+body{font-family:system-ui,sans-serif;max-width:720px;margin:0 auto;padding:24px;background:#0b0f19;color:#fff}
+h1{font-size:28px} .card{background:#161d2e;border-radius:12px;padding:20px;margin:16px 0}
+button{background:#238636;color:#fff;border:0;padding:10px 18px;border-radius:8px;cursor:pointer;margin:4px}
+button.sel{background:#1f6feb} select,input{padding:10px;border-radius:8px;border:1px solid #333;background:#0b0f19;color:#fff;width:100%;margin:6px 0}
+.slot{display:inline-block;padding:8px 12px;border:1px solid #444;border-radius:8px;margin:4px;cursor:pointer}
+.slot.sel{background:#1f6feb;border-color:#1f6feb} .slot.taken{opacity:.35;text-decoration:line-through;cursor:not-allowed}
+.price{font-size:20px;font-weight:bold}
+</style>
+</head>
+<body>
+<h1>AI Automation Booking System</h1>
+<p>24/7 online booking, AI receptionist, WhatsApp / SMS / email reminders, online payment.</p>
+<div class="card">
+<h2>Book a service</h2>
+<label>Service</label>
+<select id="service"><option>Haircut — $40</option><option>Balayage / Color — $150</option><option>Facial — $80</option><option>Massage — $90</option></select>
+<label>Stylist</label>
+<select id="stylist"><option>Ani</option><option>Sara</option><option>John</option></select>
+<label>Date</label>
+<input type="date" id="date">
+<label>Pick a time (AI suggested: 02:00 PM)</label>
+<div id="slots"></div>
+<label>Your name</label><input id="name" placeholder="Your name">
+<label>WhatsApp number</label><input id="phone" placeholder="+1 ...">
+<button onclick="book()">Confirm booking</button>
+<p id="result"></p>
+</div>
+<div class="card">
+<h2>Pricing — no setup fee</h2>
+<p><span class="price">$39/mo</span> Starter — booking + reminders</p>
+<p><span class="price">$69/mo</span> Growth — + AI receptionist + WhatsApp reminders</p>
+<p><span class="price">$99/mo</span> Premium — + payments, deposits + priority support</p>
+<p>Pakistan: Rs 1,999 – Rs 3,799/month</p>
+</div>
+<div class="card">
+<h2>AI receptionist — ready replies</h2>
+<p><b>Client:</b> Do you have a slot today?</p>
+<p><b>AI:</b> Yes — 02:00 PM and 04:30 PM are open today. Shall I book 02:00 PM for you?</p>
+<p><b>Client:</b> What is the cancellation policy?</p>
+<p><b>AI:</b> Free cancellation up to 24 hours before your appointment. A 25% fee applies after that.</p>
+</div>
+<script>
+const times=["10:00 AM","11:30 AM","02:00 PM","03:30 PM","05:00 PM"];
+const taken={"02:00 PM":false};
+document.getElementById("slots").innerHTML=times.map(t=>`<span class="slot" onclick="pick(this)">${t}</span>`).join("");
+let chosen="02:00 PM";
+function pick(el){document.querySelectorAll(".slot").forEach(s=>s.classList.remove("sel"));el.classList.add("sel");chosen=el.textContent;}
+function book(){
+ const id="BK-"+Math.floor(10000+Math.random()*89999);
+ document.getElementById("result").innerHTML="Booked! Your booking ID is <b>"+id+"</b> — "+document.getElementById("service").value+" with "+document.getElementById("stylist").value+" at "+chosen+". A WhatsApp reminder will be sent before your appointment.";
+}
+</script>
+</body>
+</html>
